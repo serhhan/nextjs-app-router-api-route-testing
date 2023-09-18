@@ -1,0 +1,15 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    ports:
+      - 5433:5432
+    volumes:
+      - route-testing-poc-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: route-testing-poc
+volumes:
+  route-testing-poc-db:
