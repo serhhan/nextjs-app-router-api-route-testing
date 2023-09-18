@@ -8,7 +8,8 @@
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint",
-    "test": "bun seed:postgres && jest",
+    "test": "jest",
+    "seed-and-test": "bun seed:postgres && bun test",
     "seed:postgres": "dotenv -e .env.test.local -- bun prisma db seed"
   },
   "dependencies": {
@@ -38,9 +39,13 @@
     "@types/jest": "^29.5.5",
     "dotenv": "^16.3.1",
     "install": "^0.13.0",
+    "isomorphic-fetch": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "next-test-api-route-handler": "^3.1.8",
     "node-mocks-http": "^1.13.0",
+    "supertest": "^6.3.3",
     "ts-jest": "^29.1.1"
   },
   "prisma": {
