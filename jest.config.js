@@ -1,13 +1,13 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+// jest.config.js
+const ignoredModules = ["next"].join("|");
 
 module.exports = {
+  verbose: true,
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testPathIgnorePatterns: ["/node_modules/", "/.next/"],
   testEnvironment: "node",
-  roots: ["<rootDir>/src"],
-  testMatch: ["**/__tests__/**/*.+(ts|js)", "**/?(*.)+(spec|test).+(ts|js)"],
   transform: {
-    "^.+\\.(js|ts)$": "babel-jest",
+    "^.+\\.(js|jsx|ts|tsx)$": "ts-jest",
   },
-  moduleDirectories: ["node_modules", "src"],
-  collectCoverage: true,
-  collectCoverageFrom: ["**/*.{js,ts}", "!**/*.d.ts"],
+  transformIgnorePatterns: [`/node_modules/(?!${ignoredModules})`],
 };
