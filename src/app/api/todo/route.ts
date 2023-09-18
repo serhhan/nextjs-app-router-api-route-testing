@@ -1,29 +1,33 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { method } = req;
-
-  switch (method) {
-    case "GET":
-      const todos = await prisma.todo.findMany();
-      return res.status(200).json(todos);
-
-    case "POST":
-      const newTodo = await prisma.todo.create({
-        data: {
-          task: req.body.task,
-          done: req.body.done || false,
-        },
-      });
-      return res.status(201).json(newTodo);
-
-    default:
-      return res.status(405).end(`Method ${method} Not Allowed`);
+const GET = async (): Promise<NextResponse> => {
+  try {
+    const todos = await prisma.todo.findMany();
+    return NextResponse.json(todos);
+  } catch (error) {
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
-}
+};
+
+const POST = async (req: NextRequest): Promise<NextResponse> => {
+  try {
+    const { task, done } = await req.json();
+
+    const newTodo = await prisma.todo.create({
+      data: {
+        task: task,
+        done: done || false,
+      },
+    });
+
+    return NextResponse.json(newTodo);
+  } catch (error) {
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+  }
+};
+
+export { GET, POST };
