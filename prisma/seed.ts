@@ -9,6 +9,7 @@ async function main() {
 
   await prisma.todo.create({
     data: {
+      id: 0,
       task: "Learn API testing with Next.js 13",
       done: false,
     },
@@ -16,6 +17,7 @@ async function main() {
 
   await prisma.todo.create({
     data: {
+      id: 1,
       task: "Deploy the app",
       done: false,
     },
